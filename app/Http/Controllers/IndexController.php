@@ -43,20 +43,27 @@ class IndexController extends Controller
         $customers = Customer::list( $country ?? null, $status ?? null )
                              ->paginate($this->paginate);
 
-        return response(['list' => $customers], 200);
+        foreach( $customers as $customer ){
+            $customer->code    = $customer->code;
+            $customer->country = $customer->country;
+            $customer->status  = $customer->status;
+            $customer->clean_phone = explode(' ', $customer->phone)[1];
+        }
+
+        return response(['customers' => $customers], 200);
     }
 
     public function listPrefixes()
     {
         $prefixes = [];
 
-        foreach(CountryPrefix:: toArray() as $country => $prefix)
+        foreach(CountryPrefix::toArray() as $country => $prefix)
             $prefixes[] = [
                 'country' => ucwords(strtolower($country)),
-                'key' => strtolower($country),
-                'prefix'  => $prefix
+                'value'   => strtolower($country),
+                'key'     => $prefix
             ];
 
-        return response(['list' => $prefixes], 200);
+        return response(['countries' => $prefixes], 200);
     }
 }

@@ -4,12 +4,15 @@ namespace App\Models;
 
 use App\Enums\CountryList;
 use App\Enums\CountryNumberRegex;
-use Illuminate\Support\Facades\DB;
 use App\Enums\CountryPrefix;
 
 class Customer extends BaseModel
 {
     protected $table = 'customer';
+
+    protected $attributes = ['code', 'country', 'status'];
+
+    protected $append     = ['code', 'country', 'status'];
 
     ####
     #   Scope Definition Area
@@ -54,6 +57,37 @@ class Customer extends BaseModel
         return $query->whereIn('id', $list);
     }
 
+    ####
+    #   Get Attributes
+    ####
+
+    public function getCodeAttribute()
+    {
+        $country_code = substr($this->phone, 1, 3);
+
+        $this->attributes['code'] = "+".$country_code;
+
+        return "+".$country_code;
+    }
+
+    public function getCountryAttribute()
+    {
+        $country_code = substr($this->phone, 1, 3);
+        $country      = CountryPrefix::getInstance($country_code);
+        $country_name = CountryList::getValue($country->key);
+
+        return ucwords($country_name);
+    }
+
+    public function getStatusAttribute()
+    {
+        $country_code = substr($this->phone, 1, 3);
+        $country = CountryPrefix::getInstance($country_code);
+        $regex   = CountryNumberRegex::getValue($country->key);
+
+        return ( preg_match($regex, $this->phone) ) ? 'OK' : 'NOK';
+    }
+
 
     ####
     #   Static Methods Area
@@ -74,8 +108,6 @@ class Customer extends BaseModel
 
         if( $status)
             $query = $query->byStatus($status);
-
-        dd($query->get());
             
         return $query;
     }

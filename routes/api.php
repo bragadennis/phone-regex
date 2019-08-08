@@ -13,5 +13,5 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('customer/list', 'IndexController@refineList');
+Route::get ('customer/list', 'IndexController@refineList');
 Route::get ('prefix/list',   'IndexController@listPrefixes');

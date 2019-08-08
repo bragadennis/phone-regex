@@ -19,10 +19,10 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('base-view',        require('./components/BaseView.vue').default);
-Vue.component('dropdown-selects', require('./components/PhoneListing/DropdownSelects.vue').default);
-Vue.component('result-table',     require('./components/PhoneListing/ResultTable.vue').default);
-Vue.component('paginate',         require('./components/PhoneListing/Paginate.vue').default);
+// Vue.component('base-view',        require('./components/BaseView.vue').default);
+// Vue.component('dropdown-selects', require('./components/PhoneListing/DropdownSelects.vue').default);
+// Vue.component('result-table',     require('./components/PhoneListing/ResultTable.vue').default);
+// Vue.component('paginate',         require('./components/PhoneListing/Paginate.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -30,6 +30,6 @@ Vue.component('paginate',         require('./components/PhoneListing/Paginate.vu
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
-});
+// const app = new Vue({
+//     el: '#app',
+// });
